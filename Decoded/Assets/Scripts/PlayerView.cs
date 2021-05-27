@@ -6,7 +6,7 @@ using UnityEngine;
     This code is based on:
         Plai-Dev (https://github.com/Plai-Dev/rigidbody-fps-controller-tutorial) Movement + View + WallRun
             "Most of the things are the same and we followed his tutorial on Youtube." (https://www.youtube.com/watch?v=LqnPeqoJRFY&list=PLRiqz5jhNfSo-Fjsx3vv2kvYbxUDMBZ0u)
-        DaniDevy (https://github.com/DaniDevy/FPS_Movement_Rigidbody/blob/master/PlayerMovement.cs) Movement
+        DaniDevy (https://github.com/DaniDevy/FPS_Movement_Rigidbody) Movement
             "We used his crouch and sliding; although he has an Youtube channel, he didn't explained how 
             the code works, so we had to mix those codes and change a few things in order to make it work."
             "We also added a few conditions to make it work in the way we want."

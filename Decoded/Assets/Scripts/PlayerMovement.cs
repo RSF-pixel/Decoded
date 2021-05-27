@@ -6,7 +6,7 @@ using UnityEngine;
     This code is based on:
         Plai-Dev (https://github.com/Plai-Dev/rigidbody-fps-controller-tutorial) Movement + View + WallRun
             "Most of the things are the same and we followed his tutorial on Youtube." (https://www.youtube.com/watch?v=LqnPeqoJRFY&list=PLRiqz5jhNfSo-Fjsx3vv2kvYbxUDMBZ0u)
-        DaniDevy (https://github.com/DaniDevy/FPS_Movement_Rigidbody/blob/master/PlayerMovement.cs) Movement
+        DaniDevy (https://github.com/DaniDevy/FPS_Movement_Rigidbody) Movement
             "We used his crouch and sliding; although he has an Youtube channel, he didn't explained how 
             the code works, so we had to mix those codes and change a few things in order to make it work."
             "We also added a few conditions to make it work in the way we want."
@@ -23,10 +23,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] public float moveSpeed = 10f; // Default player movement speed 
-    [SerializeField] float groundMovementMultiplier = 5f; // Multiplier while on ground
+    [SerializeField] float groundMovementMultiplier = 4f; // Multiplier while on ground
     [SerializeField] float airMovementMultiplier = 0.2f; // Multiplier while jumping/falling
     [SerializeField] float wallMovementMultiplier = 0.6f; // Multiplier while wall running
-
+    [SerializeField] float slideMovementMultiplier = 8f; // Multiplier while sliding
+                                                          
     [Header("Sprinting")]
     [SerializeField] float walkSpeed = 10f; // Minimum
     [SerializeField] float sprintSpeed = 14f; // Maximum
@@ -60,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
     private Vector3 playerScale = new Vector3(1, 1f, 1);
     public float slideForce = 400;
-    public float slideCounterMovement = 0.2f;
+    public float slideCounterMovement = 0.1f;
     bool crouching;
 
     public void StartCrouch()
@@ -84,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 1.5f))
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.1f))
         {
             if (slopeHit.normal != Vector3.up)
             {
@@ -186,27 +187,33 @@ public class PlayerMovement : MonoBehaviour
     {   
         if (isGrounded && !OnSlope() && !crouching)
         {
+            Physics.gravity = new Vector3(0, -10f, 0);
             rb.AddForce(moveDirection.normalized * moveSpeed * groundMovementMultiplier, ForceMode.Acceleration);
         } 
         else if (isGrounded && OnSlope() && !crouching)
         {
+            Physics.gravity = new Vector3(0, -10f, 0);
             rb.AddForce(slopeMoveDirection.normalized * moveSpeed * groundMovementMultiplier, ForceMode.Acceleration);
         }
         else if (!isGrounded && gameObject.GetComponent<PlayerWallRun>().wallLeft || gameObject.GetComponent<PlayerWallRun>().wallRight && !crouching)
         {
+            Physics.gravity = new Vector3(0, -10f, 0);
             rb.AddForce(moveDirection.normalized * moveSpeed * wallMovementMultiplier, ForceMode.Acceleration);
         } 
         else if (!isGrounded && !gameObject.GetComponent<PlayerWallRun>().wallRight || !gameObject.GetComponent<PlayerWallRun>().wallRight && !crouching)
         {
+            Physics.gravity = new Vector3(0, -10f, 0);
             rb.AddForce(moveDirection.normalized * moveSpeed * airMovementMultiplier, ForceMode.Acceleration);
         }
         else if (isGrounded && crouching && !OnSlope())
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * slideCounterMovement, ForceMode.Acceleration);
+            Physics.gravity = new Vector3(0, -10f, 0);
+            rb.AddForce(moveDirection.normalized * moveSpeed * groundMovementMultiplier * slideCounterMovement, ForceMode.Acceleration);
         }
         else if (isGrounded && crouching && OnSlope())
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 20f, ForceMode.Acceleration);
+            Physics.gravity = new Vector3(0, -50f, 0);
+            rb.AddForce(moveDirection.normalized * moveSpeed * slideMovementMultiplier, ForceMode.Acceleration);
         }
     }
 }
