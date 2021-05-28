@@ -29,8 +29,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float slideMovementMultiplier = 8f; // Multiplier while sliding
                                                           
     [Header("Sprinting")]
-    [SerializeField] float walkSpeed = 10f; // Minimum
-    [SerializeField] float sprintSpeed = 14f; // Maximum
+    [SerializeField] float walkSpeed = 12f; // Minimum
+    [SerializeField] float sprintSpeed = 18f; // Maximum
     [SerializeField] float acceleration = 10f; // Acceleration when sprinting
 
     [Header("Jumping")]
