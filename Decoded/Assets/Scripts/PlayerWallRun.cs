@@ -30,11 +30,11 @@ public class PlayerWallRun : MonoBehaviour
     [SerializeField] float wallRunJumpForce = 4f;
 
     [Header("Camera")]
-    [SerializeField] private float FOV;
-    [SerializeField] private float wallRunFOV;
-    [SerializeField] private float wallRunFOVTime;
-    [SerializeField] private float camTilt;
-    [SerializeField] private float camTiltTime;
+    [SerializeField] private float FOV = 60;
+    [SerializeField] private float wallRunFOV = 70;
+    [SerializeField] private float wallRunFOVTime = 20;
+    [SerializeField] private float camTilt = 10;
+    [SerializeField] private float camTiltTime = 20;
 
     public float tilt {get; private set;}
 
@@ -44,7 +44,6 @@ public class PlayerWallRun : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(rb);
         rb = GetComponent<Rigidbody>();
     }
 
