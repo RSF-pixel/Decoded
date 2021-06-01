@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Drag")]
     [SerializeField] float groundDrag = 5f;
-    [SerializeField] float airDrag = 0.5f;
+    [SerializeField] float airDrag = 2.5f;
 
     [Header("Keybinds")]
     [SerializeField] KeyCode jumpKey = KeyCode.Space; // Jump
@@ -189,18 +189,19 @@ public class PlayerMovement : MonoBehaviour
         {
             Physics.gravity = new Vector3(0, -10f, 0);
             rb.AddForce(moveDirection.normalized * moveSpeed * groundMovementMultiplier, ForceMode.Acceleration);
+            Debug.Log("1");
         } 
         else if (isGrounded && OnSlope() && !crouching)
         {
             Physics.gravity = new Vector3(0, -10f, 0);
             rb.AddForce(slopeMoveDirection.normalized * moveSpeed * groundMovementMultiplier, ForceMode.Acceleration);
         }
-        else if (!isGrounded && gameObject.GetComponent<PlayerWallRun>().wallLeft || gameObject.GetComponent<PlayerWallRun>().wallRight && !crouching)
+        else if (!isGrounded && (gameObject.GetComponent<PlayerWallRun>().wallLeft || gameObject.GetComponent<PlayerWallRun>().wallRight) && !crouching)
         {
             Physics.gravity = new Vector3(0, -10f, 0);
             rb.AddForce(moveDirection.normalized * moveSpeed * wallMovementMultiplier, ForceMode.Acceleration);
         } 
-        else if (!isGrounded && !gameObject.GetComponent<PlayerWallRun>().wallRight || !gameObject.GetComponent<PlayerWallRun>().wallRight && !crouching)
+        else if (!isGrounded && (!gameObject.GetComponent<PlayerWallRun>().wallLeft || !gameObject.GetComponent<PlayerWallRun>().wallRight) && !crouching)
         {
             Physics.gravity = new Vector3(0, -10f, 0);
             rb.AddForce(moveDirection.normalized * moveSpeed * airMovementMultiplier, ForceMode.Acceleration);
