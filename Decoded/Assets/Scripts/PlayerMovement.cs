@@ -189,7 +189,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Physics.gravity = new Vector3(0, -10f, 0);
             rb.AddForce(moveDirection.normalized * moveSpeed * groundMovementMultiplier, ForceMode.Acceleration);
-            Debug.Log("1");
         } 
         else if (isGrounded && OnSlope() && !crouching)
         {
