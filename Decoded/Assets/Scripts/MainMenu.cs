@@ -7,14 +7,22 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] GameObject mainMenuPanel;
     [SerializeField] GameObject creditsPanel;
+    [Header("Sound")]
+    public AudioSource sound;
 
     private void Start()
     {
         mainMenuPanel.SetActive(true);
         creditsPanel.SetActive(false);
+        sound.Play();
     }
 
     public void StartGame()
+    {
+        Invoke("LoadGame", 1);
+    }
+
+    public void LoadGame()
     {
         SceneManager.LoadScene("Game");
     }
