@@ -14,6 +14,7 @@ public class ElevatorControl : MonoBehaviour
     public AudioSource bingSound;
     private Animator anim;
     private bool elevatorUp = false;
+    private bool flag = false;
     RaycastHit elevator;
     public void Update()
     {
@@ -21,8 +22,9 @@ public class ElevatorControl : MonoBehaviour
         {
             if (Physics.Raycast(PlayerCamera.transform.position, PlayerCamera.transform.forward, out elevator, MaxDistance))
             {
-                if (elevator.transform.tag == "Elevator")
+                if (elevator.transform.tag == "Elevator" && !flag)
                 {
+                    flag = !flag;
                     elevatorSound.Play();
                     elevatorUp = !elevatorUp;
                     anim = elevator.transform.GetComponentInParent<Animator>();
@@ -36,6 +38,7 @@ public class ElevatorControl : MonoBehaviour
     void Bing()
     {
         bingSound.Play();
+        flag = !flag;
     }
 
 }
