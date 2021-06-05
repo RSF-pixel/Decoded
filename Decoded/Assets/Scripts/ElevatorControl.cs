@@ -9,6 +9,9 @@ public class ElevatorControl : MonoBehaviour
     public float MaxDistance = 4;
     [Header("Keybinds")]
     [SerializeField] KeyCode openDoorKey = KeyCode.F;
+    [Header("Sound")]
+    public AudioSource elevatorSound;
+    public AudioSource bingSound;
     private Animator anim;
     private bool elevatorUp = false;
     RaycastHit elevator;
@@ -20,12 +23,19 @@ public class ElevatorControl : MonoBehaviour
             {
                 if (elevator.transform.tag == "Elevator")
                 {
+                    elevatorSound.Play();
                     elevatorUp = !elevatorUp;
                     anim = elevator.transform.GetComponentInParent<Animator>();
                     anim.SetBool("ElevatorUp", elevatorUp);
+                    Invoke("Bing", 3);
                 }
             }
         }
+    }
+    
+    void Bing()
+    {
+        bingSound.Play();
     }
 
 }
