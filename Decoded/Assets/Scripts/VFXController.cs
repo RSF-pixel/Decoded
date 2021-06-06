@@ -19,7 +19,7 @@ public class VFXController : MonoBehaviour
         {
             Debug.Log(rb.velocity);
             vfx.SetActive(true);
-            
+             
         }
         else
         {
