@@ -29,12 +29,6 @@ public class PlayerView : MonoBehaviour
     float xRotation;
     float yRotation;
 
-    private void Start()
-    { 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
     private void Update()
     {
         mouseX = Input.GetAxisRaw("Mouse X");

@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] KeyCode jumpKey = KeyCode.Space; // Jump
     [SerializeField] KeyCode sprintKey = KeyCode.LeftShift; // Sprint
     [SerializeField] KeyCode crouchKey = KeyCode.LeftControl; // Crouch
+    [SerializeField] KeyCode pauseKey = KeyCode.P; // Pause
 
     [Header("Ground Detection")]
     [SerializeField] LayerMask groundMask;
@@ -116,6 +117,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
             Jump();
+        }
+
+        if (Input.GetKeyDown(pauseKey))
+        {
+            Interface.showPanel = !Interface.showPanel;
+            Interface.showText = "PAUSED";
         }
 
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
@@ -214,6 +221,16 @@ public class PlayerMovement : MonoBehaviour
         {
             Physics.gravity = new Vector3(0, -50f, 0);
             rb.AddForce(moveDirection.normalized * moveSpeed * slideMovementMultiplier, ForceMode.Acceleration);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("GameOver"))
+        {
+            Interface.showPanel = true;
+            Interface.showText = "GAME OVER";
+            pauseKey = KeyCode.None;
         }
     }
 }
