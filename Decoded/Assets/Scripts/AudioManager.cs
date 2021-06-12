@@ -6,16 +6,18 @@ using System;
 
 public class AudioManager : MonoBehaviour
 {
+    // Based on a tutorial from Brackeys :
+    // https://www.youtube.com/watch?v=6OT43pvUyfY
 
     public Sound[] sounds;
 
-    // Start is called before the first frame update
+    
     void Awake()
     {
-        Debug.Log("hey");
+        
         foreach (Sound s in sounds)
         {
-            Debug.Log("hey1");
+          
             s.source = gameObject.AddComponent<AudioSource>();
 
             s.source.clip = s.clip;
@@ -28,7 +30,6 @@ public class AudioManager : MonoBehaviour
     }
     public void Play (string name)
     {
-        Debug.Log("hey2");
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Play();
     }
